@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Mundur Ramadhan 1446 H</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .arabic-text { font-family: 'Amiri', serif; }
+        body { font-family: 'Poppins', sans-serif; }
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-900 via-emerald-900 to-gray-900 text-white relative overflow-hidden">
+    <!-- Dekorasi Bulan Sabit -->
+    <div class="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-yellow-300 to-amber-200 rounded-full opacity-20 blur-xl"></div>
+    <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-br from-yellow-300 to-amber-200 rounded-full opacity-20 blur-xl"></div>
+
+    <div class="text-center z-10 px-4">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold mb-2 tracking-wide">Ramadhan Kareem 1446 H</h1>
+            <p class="text-lg text-gray-200">"Bulan yang penuh berkah telah hampir tiba"</p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="countdown-box p-4 rounded-lg shadow-lg">
+                <div class="text-5xl font-bold mb-2 text-yellow-300" id="days">00</div>
+                <div class="text-sm text-gray-300">Hari</div>
+            </div>
+            <div class="countdown-box p-4 rounded-lg shadow-lg">
+                <div class="text-5xl font-bold mb-2 text-yellow-300" id="hours">00</div>
+                <div class="text-sm text-gray-300">Jam</div>
+            </div>
+            <div class="countdown-box p-4 rounded-lg shadow-lg">
+                <div class="text-5xl font-bold mb-2 text-yellow-300" id="minutes">00</div>
+                <div class="text-sm text-gray-300">Menit</div>
+            </div>
+            <div class="countdown-box p-4 rounded-lg shadow-lg">
+                <div class="text-5xl font-bold mb-2 text-yellow-300" id="seconds">00</div>
+                <div class="text-sm text-gray-300">Detik</div>
+            </div>
+        </div>
+
+        <div id="message" class="hidden mt-8 max-w-2xl mx-auto">
+            <div class="bg-green-900/30 p-8 rounded-2xl border border-green-800/50 shadow-xl">
+                <p class="text-3xl font-bold text-green-400 mb-4">Marhaban Ya Ramadhan!</p>
+                <p class="text-lg mb-4">"Semoga kita semua dapat meraih keberkahan di bulan suci ini"</p>
+                
+                <div class="arabic-text text-2xl leading-relaxed text-amber-200 mt-6">
+                    ﴿يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ﴾
+                </div>
+                <p class="text-gray-300 mt-4 text-sm">"Wahai orang-orang yang beriman! Diwajibkan atas kamu berpuasa sebagaimana diwajibkan atas orang sebelum kamu agar kamu bertakwa." (QS. Al-Baqarah: 183)</p>
+                
+                <div class="mt-8 p-4 bg-amber-900/20 rounded-lg">
+                    <p class="arabic-text text-xl mb-2">«إِذَا جَاءَ رَمَضَانُ فُتِحَتْ أَبْوَابُ الْجَنَّةِ...»</p>
+                    <p class="text-gray-300 text-sm">"Apabila Ramadhan tiba, pintu-pintu surga dibuka..." (HR. Bukhari & Muslim)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="absolute bottom-4 text-center text-sm text-gray-400">
+        <p>© 2025 IjajMaolana</p>
+    </footer>
+
+    <audio id="alarm" src="ramadhan.ogg"></audio>
+
+    <script>
+        // Update tanggal Ramadhan sesuai tahun Hijriyah
+        const ramadhanDate = new Date("March 01, 2025 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = ramadhanDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("days").textContent = days.toString().padStart(2, '0');
+                document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById("message").classList.remove("hidden");
+                document.querySelector('.grid').classList.add("hidden");
+                
+                const audio = document.getElementById("alarm");
+                audio.loop = true;
+                audio.play().catch(error => console.log("Audio play failed:", error));
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
